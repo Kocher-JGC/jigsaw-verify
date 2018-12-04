@@ -11,3 +11,4 @@ Shuffle algorithm and The slider validation。
 
 ##### 对生成的拼图图片加密，能够使拼图滑动验证更加安全。
 
+# 代码和DOME持续更新中
