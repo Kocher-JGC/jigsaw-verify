@@ -43,6 +43,7 @@ JSONParam = {
     scrrollContainer: '', // 鼠标允许的操作范围的容器
     offsetScroll: number, // 控制滑动拼图的容器的偏移值
     moveStop: Function, // 移动结束的回调函数
+    // 回调函数有三个参数 1、回滚操作的函数 2、移动的值 3、原始事件
 }
 ```
 
