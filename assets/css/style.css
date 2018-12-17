@@ -9,12 +9,19 @@ body {
 h1 {
   display: inline-block;
   margin-bottom: 10px;
+  margin-top: 10px;
   padding: 10px 15px;
   background-color: rgb(92, 173, 255);
   color: #fff;
   border-radius: 4px;
   font-size: 18px;
   /* line-height: 1.5; */
+}
+.ml10 {
+  margin-left: 10px;
+}
+.mr10 {
+  margin-right: 10px;
 }
 .wrap-list {
   position: relative;
@@ -28,23 +35,19 @@ h1 {
  
 .list {
   display: inline-block;
-  /* float: left; */
-  margin-bottom: 20px;
   padding: 10px;
-  max-width: 40%;
+  /* max-width: 40%; */
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 1px 6px rgba(0,0,0,.2);
   border: 1px solid #eee;
   overflow: hidden;
 }
-.list:nth-child(2n-1) {
-  margin-right: 4%;
-  margin-left: 3%;
-}
 .arrow {
   position: relative;
   display: inline-block;
+  margin-left: 10px;
+  margin-right: 20px;
   width: 80px;
   height: 30px;
   line-height: 30px;
@@ -67,4 +70,9 @@ h1 {
 .demo-box-1 {
   width: 384px;
   height: 260px;
+}
+.scroll-box {
+  /* width: 200px;
+  height: 260px; */
+  border-left: 1px solid rgb(238, 238, 238);
 }
