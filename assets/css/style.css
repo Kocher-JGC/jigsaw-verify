@@ -23,6 +23,12 @@ h1 {
 .mr10 {
   margin-right: 10px;
 }
+.mb5 {
+  margin-bottom: 5px;
+}
+.vertical-middle {
+  vertical-align: middle;
+}
 .wrap-list {
   position: relative;
   padding: 10px;

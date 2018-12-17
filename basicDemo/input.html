@@ -7,26 +7,33 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="../assets/css/style.css">
   <title>输入演示</title>
-  <!-- <script src="../lib/scroll-check.mi.js"></script> -->
-  <script src="../lib/scroll-check.js"></script>
+  <script src="../lib/scroll-check.mi.js"></script>
+  <!-- <script src="../lib/scroll-check.js"></script> -->
   <script>
     window.addEventListener('load', () => {
       const D = document;
-      const canvasDom = D.querySelectorAll('canvas');
-      const imgDom = D.querySelector('img');
+      const GetAllDom = str => D.querySelectorAll(str);
+      const canvasDom = GetAllDom('canvas');
+      const imgDom = GetAllDom('img')[0];
+      const valContainer = GetAllDom('.val');
 
       /** 第一种 **/
-      initScrollCheck({
+      const Check_1 = initScrollCheck({
         input: imgDom,
         ctx: canvasDom[0],
         scrollCtx: canvasDom[1],
         autoMakeData: true,
-        createConfig: {}
+        createConfig: {},
       });
+      /** TODO:发现问题，忘记了如果普通的还有个制作完的回调 **/
+      setTimeout(() => {
+        valContainer[0].innerHTML = Check_1.coefficient;
+        valContainer[1].innerHTML = Check_1.verifyValue;
+      }, 1200);
       /** 第二种 **/
       const ctx = canvasDom[2].getContext('2d');
-      ctx.drawImage(imgDom,0,0); // 注意输入之前记得规定好canvas的宽度属性
-      const scr = initScrollCheck({
+      ctx.drawImage(imgDom, 0, 0); // 注意输入之前记得规定好canvas的宽度属性
+      const Check_2 = initScrollCheck({
         input: ctx, /** OR  canvasDom[2]**/
         width: 384,
         height: 260,
@@ -35,17 +42,26 @@
         autoMakeData: true,
         createConfig: {}
       });
-      console.log(scr);
-      
+      /** TODO:发现问题，忘记了如果普通的还有个制作完的回调 **/
+      setTimeout(() => {
+        valContainer[2].innerHTML = Check_2.coefficient;
+        valContainer[3].innerHTML = Check_2.verifyValue;
+      }, 1200);
 
       /** 第三种 **/
-      initScrollCheck({
+      const three = initScrollCheck({
         input: '#input',
         ctx: canvasDom[5],
         scrollCtx: canvasDom[6],
         autoMakeData: true,
-        createConfig: {}
+        createConfig: {},
+        changeCallback: (base64, img) => {
+          // console.log(base64, img);
+          valContainer[4].innerHTML = Check_2.coefficient;
+          valContainer[5].innerHTML = Check_2.verifyValue;
+        }
       });
+      console.log(three);
 
 
     })
@@ -54,10 +70,14 @@
 
 <body>
   <h1>img（DOM/selector）输入</h1>
+  <div class="list ml10 mb5 vertical-middle">
+    <p><strong>唯一标识值：</strong><span class="val"></span></p>
+    <p><strong>正确校验值：</strong><span class="val"></span></p>
+  </div>
   <div class="wrap-list">
     <div class="list">
       <img style="width:384px;height:260px" src="../assets/img/260-1.jpeg" alt="" class="demo-box-1">
-    </div> 
+    </div>
     <div class="arrow">
       效果
     </div>
@@ -67,9 +87,13 @@
     </div>
   </div>
   <h1>canvas（DOM/selector/CanvasRenderingContext2D）输入</h1>
+  <div class="list ml10 mb5 vertical-middle">
+    <p><strong>唯一标识值：</strong><span class="val"></span></p>
+    <p><strong>正确校验值：</strong><span class="val"></span></p>
+  </div>
   <div class="wrap-list">
     <div class="list">
-      <canvas  width="384" height="260"  class="demo-box-1"></canvas>
+      <canvas width="384" height="260" class="demo-box-1"></canvas>
     </div>
     <div class="arrow">
       效果
@@ -80,6 +104,10 @@
     </div>
   </div>
   <h1>input（DOM/selector）输入</h1>
+  <div class="list ml10 mb5 vertical-middle">
+    <p><strong>唯一标识值：</strong><span class="val"></span></p>
+    <p><strong>正确校验值：</strong><span class="val"></span></p>
+  </div>
   <div class="wrap-list">
     <div class="list">
       <input id="input" type="file">
