@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ZH-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <title>Config</title>
+  <!-- <script src="../lib/scroll-check.mi.js"></script> -->
+  <script src="../lib/scroll-check.js"></script>
+  <script> 
+    window.addEventListener('load', () => {
+      const D = document;
+      const GetAllDom = str => D.querySelectorAll(str);
+      const canvasDom = GetAllDom('canvas');
+      const imgDom = GetAllDom('img');
+      // const valContainer = GetAllDom('.val');
+
+      /** 第一种 **/
+      const Check_1 = initScrollCheck({
+        input: imgDom[0],
+        ctx: canvasDom[0],
+        scrollCtx: canvasDom[1],
+        autoMakeData: true,
+        width: 300, // 画布的工作宽度默认取ctx的OffsetWidth 在无ctx情况下。默认320
+        height: 200, // 画布的工作高度默认取ctx的OffsetHeight 在无ctx情况下。默认200
+        createConfig: {
+          width: 50, // 拼图宽度
+          height: 50, // 拼图高度
+          padding: 10, // 拼图的内填充（把该拼图理解成content盒子）
+          radius: 8, // 拼图每个圆点的半径
+          // 四边方向，true 凸 fale 凹。如果没有定义的方向默认随机生成  
+          direction: {
+            left: true,
+            // right: true,
+            // bottom: false,
+            top: false,
+          }
+        },
+      });
+
+      /** 第二种 **/
+      initScrollCheck({
+        input: imgDom[1],
+        createConfig: {},
+        piece: 24,
+        segment:4,
+        autoMakeData: true,
+        ctx: canvasDom[2],
+        scrollCtx: canvasDom[3],
+      })
+
+      /** 第二种 **/
+      const Check_2 = initScrollCheck({
+        input: imgDom[1],
+        createConfig: {},
+        autoMakeData: true,
+      })
+      console.log(Check_2);
+    },false);
+  </script>
+</head>
+
+<body>
+  <h1>改变外观（工作区/拼图的宽高。拼图的内填充、圆点的半径、四边的方向）</h1>
+  <!-- <div class="list ml10 mb5 vertical-middle">
+    <p><strong>唯一标识值：</strong><span class="val"></span></p>
+    <p><strong>正确校验值：</strong><span class="val"></span></p>
+  </div> -->
+  <div class="wrap-list">
+    <div class="list">
+      <img style="width:384px;height:260px" src="../assets/img/260-1.jpeg" alt="" class="demo-box-1">
+    </div>
+    <div class="arrow">
+      效果
+    </div>
+    <div class="list">
+      <canvas class="demo-box-1 mr10"></canvas>
+      <canvas class="scroll-box ml10"></canvas>
+    </div>
+  </div>
+  <h1>固定裁切</h1>
+  <div class="wrap-list">
+    <div class="list">
+      <img style="width:384px;height:260px" src="../assets/img/260-1.jpeg" alt="" class="demo-box-1">
+    </div>
+    <div class="arrow">
+      效果
+    </div>
+    <div class="list">
+      <canvas class="demo-box-1 mr10"></canvas>
+      <canvas class="scroll-box ml10"></canvas>
+    </div>
+  </div>
+</body>
+
+</html>
