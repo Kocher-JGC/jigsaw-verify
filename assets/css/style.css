@@ -17,6 +17,9 @@ h1 {
   font-size: 18px;
   /* line-height: 1.5; */
 }
+.margin10 { 
+  margin: 10px;
+}
 .ml10 {
   margin-left: 10px;
 }

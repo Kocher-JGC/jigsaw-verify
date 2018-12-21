@@ -7,21 +7,77 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="../assets/css/style.css">
   <title>Config</title>
+  <style>
+    #getData_1 {
+      cursor: pointer;
+    }
+  </style>
   <!-- <script src="../lib/scroll-check.mi.js"></script> -->
   <script src="../lib/scroll-check.js"></script>
   <script> 
     window.addEventListener('load', () => {
-      const D = document;
-      const GetAllDom = str => D.querySelectorAll(str);
-      const canvasDom = GetAllDom('canvas');
-      const imgDom = GetAllDom('img');
+      const 
+        D = document,
+        GetAllDom = str => D.querySelectorAll(str),
+        canvasDom = GetAllDom('canvas'),
+        imgDom = GetAllDom('img'),
+        dataKeys = ['finishUrl','scrollUrl','coefficient','verifyValue'],
+        labels = ['打乱数据后的base64：','拼图的base64：','唯一标识值：','正确校验值：'],
+        putImageData = (dom, data) => dom.getContext('2d').putImageData(data,0,0);
       // const valContainer = GetAllDom('.val');
 
-      /** 第一种 **/
+      /** 最小配置 
+       *  因为输入的是IMGDOM 能够获取offsetWidth
+       *  所以以DOM 的宽高为标准，为的是不改变图片的样子
+      **/
       const Check_1 = initScrollCheck({
+        input: imgDom[1],
+        createConfig: {},
+      })
+      // console.log(Check_1);
+      GetAllDom('#getData_1')[0].onclick = () => {
+        // 调用语法糖生成数据
+        Check_1.autoMakeData();
+        // 获取生成的数据 把数据推入画布
+        putImageData(canvasDom[0], Check_1.finishData);
+        putImageData(canvasDom[1], Check_1.scrollData);
+        // 把其他数据输出到页面
+        GetAllDom('#dataInfoWrap_1 .dataInfo').forEach( (dom, i) => {
+          dom.innerHTML = labels[i] + ( i < 2 ? Check_1[ dataKeys[ i ] ].slice(0, 50) + '...' : Check_1[ dataKeys[ i ] ]);
+        })
+      }
+
+      /** 最小配置 （输入为input）
+       * 因为没有定义宽高，而又没办法获取其他DOM的宽高，所以默认为320/200
+      **/
+      const Check_2 = initScrollCheck({
+        input: '#getData_2',
+        createConfig: {},
+        autoMakeData: true, // 为true时候主动触发autoMakeData 生成数据
+        // ctx: canvasDom[2], 
+        // scrollCtx: canvasDom[3],
+        // 传入ctx 使其可以获取到有效宽/高
+        // 如果只传入 ctx 不传入 scrollCtx 生成 finishData 和 scrollData
+        // 使用的是同一个画布 所以看到的只有最后生成的拼图
+        // 但同时传入 scrollCtx 就会使用不同画布
+        changeCallback: (base64, img) => {
+          // 调用语法糖生成数据
+          // Check_2.autoMakeData();
+          // 获取生成的数据 把数据推入画布
+          putImageData(canvasDom[2], Check_2.finishData);
+          putImageData(canvasDom[3], Check_2.scrollData);
+          // 把其他数据输出到页面
+          GetAllDom('#dataInfoWrap_2 .dataInfo').forEach( (dom, i) => {
+            dom.innerHTML = labels[i] + ( i < 2 ? Check_2[ dataKeys[ i ] ].slice(0, 50) + '...' : Check_2[ dataKeys[ i ] ]);
+          })
+        }
+      });
+
+      /** 改变外观 **/
+      initScrollCheck({
         input: imgDom[0],
-        ctx: canvasDom[0],
-        scrollCtx: canvasDom[1],
+        ctx: canvasDom[4],
+        scrollCtx: canvasDom[5],
         autoMakeData: true,
         width: 300, // 画布的工作宽度默认取ctx的OffsetWidth 在无ctx情况下。默认320
         height: 200, // 画布的工作高度默认取ctx的OffsetHeight 在无ctx情况下。默认200
@@ -40,59 +96,111 @@
         },
       });
 
-      /** 第二种 **/
+      /** 固定裁切 **/
       initScrollCheck({
         input: imgDom[1],
         createConfig: {},
         piece: 24,
         segment:4,
         autoMakeData: true,
-        ctx: canvasDom[2],
-        scrollCtx: canvasDom[3],
+        ctx: canvasDom[6],
+        scrollCtx: canvasDom[7],
       })
 
-      /** 第二种 **/
-      const Check_2 = initScrollCheck({
-        input: imgDom[1],
-        createConfig: {},
-        autoMakeData: true,
-      })
-      console.log(Check_2);
     },false);
   </script>
 </head>
 
 <body>
-  <h1>改变外观（工作区/拼图的宽高。拼图的内填充、圆点的半径、四边的方向）</h1>
-  <!-- <div class="list ml10 mb5 vertical-middle">
-    <p><strong>唯一标识值：</strong><span class="val"></span></p>
-    <p><strong>正确校验值：</strong><span class="val"></span></p>
-  </div> -->
-  <div class="wrap-list">
-    <div class="list">
-      <img style="width:384px;height:260px" src="../assets/img/260-1.jpeg" alt="" class="demo-box-1">
+  <section>
+    <h1 class="vertical-middle">最小配置</h1><div id="getData_1" class="list vertical-middle margin10">点击获取数据</div>
+    <div class="wrap-list">
+      <div class="list mb5" style="display:block;">
+        <p style="font-size:18px;color:brown;" >
+          因为输入的是IMGDOM 能够获取offsetWidth <br>
+          所以以DOM 的宽高为标准，为的是不改变图片的样子
+        </p>
+      </div>
+      <div class="list">把获取的数据输出</div>
+      <div class="arrow">
+        效果
+      </div>
+      <div class="list">
+        <!-- style="width:384px;height:260px" -->
+        <!-- 因为 input为一个DOM，能够获取其offsetWidth所以不以默认的320为标准以DOM为标准 -->
+        <canvas width="384" height="260" class="demo-box-1 mr10"></canvas>
+        <canvas width="384" height="260" class="scroll-box ml10"></canvas>
+      </div>
     </div>
-    <div class="arrow">
-      效果
+    <div id="dataInfoWrap_1" class="wrap-list">
+      <div class="list">
+        <p style="font-size:18px;color:brown;"></p>
+        <p class="dataInfo"></p>
+        <p class="dataInfo"></p>
+        <p class="dataInfo"></p>
+        <p class="dataInfo"></p>
+      </div>
     </div>
-    <div class="list">
-      <canvas class="demo-box-1 mr10"></canvas>
-      <canvas class="scroll-box ml10"></canvas>
+  </section>
+  <section>
+    <h1 class="vertical-middle">最小配置(输入是input的默认情况)</h1><div class="list vertical-middle margin10"><input type="file" id="getData_2"></div>
+    <div class="wrap-list">
+      <div class="list mb5" style="display:block;">
+        <p style="font-size:18px;color:brown;" >
+          因为没有定义宽高，而又没办法获取其他DOM的宽高，所以默认为320/200。<br>
+          所以盒子原本的宽高并不会影响生成（可传入ctx参数使其自动获取容器宽高和生成展示效果）
+        </p>
+      </div>
+      <div class="list">把获取的数据输出</div>
+      <div class="arrow">
+        效果
+      </div>
+      <div class="list">
+        <!-- style="width:384px;height:260px" -->
+        <!-- 因为 input为一个DOM，能够获取其offsetWidth所以不以默认的320为标准以DOM为标准 -->
+        <canvas width="384" height="260" class="demo-box-1 mr10"></canvas>
+        <canvas width="384" height="260" class="scroll-box ml10"></canvas>
+      </div>
     </div>
-  </div>
-  <h1>固定裁切</h1>
-  <div class="wrap-list">
-    <div class="list">
-      <img style="width:384px;height:260px" src="../assets/img/260-1.jpeg" alt="" class="demo-box-1">
+    <div id="dataInfoWrap_2" class="wrap-list">
+      <div class="list">
+        <p class="dataInfo"></p>
+        <p class="dataInfo"></p>
+        <p class="dataInfo"></p>
+        <p class="dataInfo"></p>
+      </div>
     </div>
-    <div class="arrow">
-      效果
+  </section>
+  <section>
+    <h1>改变外观（工作区/拼图的宽高。拼图的内填充、圆点的半径、四边的方向）</h1>
+    <div class="wrap-list">
+      <div class="list">
+        <img style="width:384px;height:260px" src="../assets/img/260-1.jpeg" alt="" class="demo-box-1">
+      </div>
+      <div class="arrow">
+        效果
+      </div>
+      <div class="list">
+        <canvas class="demo-box-1 mr10"></canvas>
+        <canvas class="scroll-box ml10"></canvas>
+      </div>
     </div>
-    <div class="list">
-      <canvas class="demo-box-1 mr10"></canvas>
-      <canvas class="scroll-box ml10"></canvas>
+  </section>
+  <section>
+    <h1>固定裁切</h1>
+    <div class="wrap-list">
+      <div class="list">
+        <img style="width:384px;height:260px" src="../assets/img/260-1.jpeg" alt="" class="demo-box-1">
+      </div>
+      <div class="arrow">
+        效果
+      </div>
+      <div class="list">
+        <canvas class="demo-box-1 mr10"></canvas>
+        <canvas class="scroll-box ml10"></canvas>
+      </div>
     </div>
-  </div>
+  </section>
 </body>
 
 </html>
