@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ZH-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <title>Config</title>
+  <style>
+    #scroll-box {
+      position: absolute;
+      left: 10px;
+    }
+    .handler-check-box {
+      position: relative;
+      padding-top: 18px;
+      padding-bottom: 18px;
+    }
+    .handler-check {
+      width: 100%;
+      height: 14px;
+      border-radius: 10px;
+      background-color: rgb(238, 238, 238);
+    }
+    .check-block {
+      position: absolute;
+      top: 8px;
+      width: 65px; height: 36px;
+      border-radius: 18px;
+      text-align: center;
+      background-color: rgb(92, 173, 255);
+      user-select: none;
+      cursor: pointer;
+      transform: translate(-5px,0)
+    }
+  </style>
+  <!-- <script src="../lib/scroll-check.mi.js"></script> -->
+  <script src="../lib/scroll-check.min.js"></script>
+  <!-- <script src="../lib/scroll-check.js"></script> -->
+  <script>
+    window.addEventListener('load', () => {
+      const D = document;
+      const GetAllDom = str => D.querySelectorAll(str);
+      const canvasDom = GetAllDom('canvas');
+      const valContainer = GetAllDom('.val');
+      const createObj = initScrollCheck({
+        input: '#input',
+        ctx: canvasDom[0],
+        scrollCtx: canvasDom[1],
+        autoMakeData: true,
+        createConfig: {},
+        changeCallback: (base64, img) => {
+          // console.log(base64, img);
+          valContainer[0].innerHTML = createObj.coefficient;
+          valContainer[1].innerHTML = createObj.verifyValue;
+        }
+      });
+
+      const verifyOffset  = 5;
+      GetAllDom('#reduction')[0].onclick = () => {
+        const finishObj = createObj.coefficient && initScrollCheck({
+          ctx: canvasDom[2],
+          scrollCtx: canvasDom[3],
+          finishData: createObj.finishUrl,
+          scrollData: createObj.scrollData,
+          coefficient: createObj.coefficient,
+          // 自动绑定事件 ，您也可以不绑定，再外部自行调用
+          handlerScrollDom: '.check-block',
+          scrrollContainer: '#scrrollContainer',
+          offsetScroll: -5,
+          moveStop: function (resetCallback, moveOffset, event) {
+            if (moveOffset >= createObj.verifyValue - verifyOffset && moveOffset <= createObj.verifyValue + verifyOffset ) {
+              alert('验证成功');
+            } else {
+              alert('验证失败')
+            }
+            resetCallback();
+          }
+        });
+        // 自行设置移动距离
+        // finishObj.drawScrollCheck(Number)
+      }
+    }, false);
+  </script>
+</head>
+
+<body>
+  <section>
+    <h1>输入</h1>
+    <div class="list ml10 mb5 vertical-middle">
+      <p><strong>唯一标识值：</strong><span class="val"></span></p>
+      <p><strong>正确校验值：</strong><span class="val"></span></p>
+    </div>
+    <div class="wrap-list">
+      <div class="list">
+        <input id="input" type="file">
+      </div>
+      <div class="arrow">
+        效果
+      </div>
+      <div class="list">
+        <canvas class="demo-box-1 mr10"></canvas>
+        <canvas class="scroll-box ml10"></canvas>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h1 class="vertical-middle">还原</h1>
+    <div id="reduction" class="list vertical-middle margin10">点击还原数据</div>
+    <div class="wrap-list">
+      <div id="scrrollContainer" class="list">
+        <canvas class="demo-box-1"></canvas>
+        <canvas id="scroll-box" class="demo-box-1"></canvas>
+        <div class="handler-check-box">
+          <div class="handler-check"></div>
+          <div class="check-block"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>
