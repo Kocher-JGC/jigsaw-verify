@@ -17,7 +17,7 @@ h1 {
   font-size: 18px;
   /* line-height: 1.5; */
 }
-.margin10 { 
+.margin10 {
   margin: 10px;
 }
 .ml10 {
@@ -41,8 +41,9 @@ h1 {
 .wrap-list > *{
   vertical-align: middle;
 }
- 
+
 .list {
+  position: relative;
   display: inline-block;
   padding: 10px;
   /* max-width: 40%; */
@@ -70,7 +71,7 @@ h1 {
   position:absolute;
   right: -12px; top: -8px;
   display: block;
-  width: 0;  height: 0;  
+  width: 0;  height: 0;
   border-left: 15px solid rgb(92, 173, 255);
   border-top: 24px solid transparent;
   border-bottom: 24px solid transparent;
