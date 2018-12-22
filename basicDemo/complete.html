@@ -36,8 +36,8 @@
     }
   </style>
   <!-- <script src="../lib/scroll-check.mi.js"></script> -->
-  <script src="../lib/scroll-check.min.js"></script>
-  <!-- <script src="../lib/scroll-check.js"></script> -->
+  <!-- <script src="../lib/scroll-check.min.js"></script> -->
+  <script src="../lib/scroll-check.js"></script>
   <script>
     window.addEventListener('load', () => {
       const D = document;
@@ -80,6 +80,19 @@
         });
         // 自行设置移动距离
         // finishObj.drawScrollCheck(Number)
+        // let offset = 0;
+        // let timer = setInterval(()=>{
+        //   finishObj.drawScrollCheck(offset--);
+        //   if(offset >= createObj.verifyValue) {
+        //   // if(offset <= -100) {
+        //     clearInterval(timer);
+        //     if (offset >= createObj.verifyValue - verifyOffset && offset <= createObj.verifyValue + verifyOffset ) {
+        //       alert('验证成功');
+        //     } else {
+        //       alert('验证失败')
+        //     }
+        //   }
+        // },50);
       }
     }, false);
   </script>
