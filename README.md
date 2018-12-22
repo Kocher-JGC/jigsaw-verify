@@ -14,6 +14,6 @@ Shuffle algorithm and The slider validation。
 
 ##### 对生成的拼图图片加密，能够使拼图滑动验证更加安全。
 
-## 基本DEMO已经更新完毕，随后会更新前后台联动的DEMO。
-# 注意：因为使用Canvas 所有不兼容Canvas的浏览器不能运行。（目前是ES6版本的如需ES5可以联系）
-# 注意：因为是canvas绘制所以须在服务器环境下运行HTML。不然chrome或者firefox会报错。
+### 基本DEMO已经更新完毕，随后会更新前后台联动的DEMO。
+## 注意：因为使用Canvas 所有不兼容Canvas的浏览器不能运行。（目前是ES6版本的如需ES5可以联系）
+## 注意：因为是canvas绘制所以须在服务器环境下运行HTML。不然chrome或者firefox会报错。
