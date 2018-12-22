@@ -9,6 +9,9 @@ Shuffle algorithm and The slider validation。
 2. 根据传入的图片和内置算法进行拆分成很多无序块
 3. 根据特定规则把无须小块还原成最初生成的拼图图片
 
+# 使用
+[直接DEMO](./basicDemo/)
+
 ##### 对生成的拼图图片加密，能够使拼图滑动验证更加安全。
 
 ## 基本DEMO已经更新完毕，随后会更新前后台联动的DEMO。
